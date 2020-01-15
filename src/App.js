@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import TopicsList from './components/TopicsList';
 import ArticleList from './components/ArticleList';
 import FullArticle from './components/FullArticle';
+import UserPage from './components/UserPage';
+import ErrorPage from './components/ErrorPage';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <ArticleList path='/topic/:topic' />
         <TopicsList path='/topics' />
         <FullArticle path='/article/:articleid' />
+        <UserPage path='/user/:username' />
+        <ErrorPage default />
       </Router>
     </div>
   );
