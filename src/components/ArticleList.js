@@ -7,7 +7,7 @@ export default class ArticleList extends Component {
   state = {
     articles: [],
     loading: true,
-    error: false, // todo
+    error: null,
     author: '',
     authorInput: '', // do I actually need this?
     sortBy: 'created_at',
@@ -21,40 +21,52 @@ export default class ArticleList extends Component {
   }
 
   componentDidUpdate(prevprops, prevstate) {
-    const { topic } = this.props
-    const { order, author, sortBy } = this.state
-    if (prevprops.topic !== topic || prevstate.order !== order || prevstate.author !== author || prevstate.sortBy !== sortBy) {
+    const { topic } = this.props;
+    const { order, author, sortBy } = this.state;
+    const topicChanged = prevprops.topic !== topic;
+    const orderChanged = prevstate.order !== order;
+    const authorChanged = prevstate.author !== author;
+    const sortByChanged = prevstate.sortBy !== sortBy;
+    if (topicChanged || orderChanged || authorChanged || sortByChanged) {
       this.fetchArticles(topic, order, author, sortBy)
     }
   }
 
   render() {
+    const { author, order, sortBy, authorInput, error, loading, articles } = this.state;
+    const { currentUser } = this.props;
     return (
       < div >
         <SortPanel
           sortingParams={this.getSortingParams}
           submit={this.getAuthorSubmit}
-          author={this.state.author}
-          order={this.state.order}
-          sortBy={this.state.sortBy}
-          authorInput={this.state.authorInput}
+          author={author}
+          order={order}
+          sortBy={sortBy}
+          authorInput={authorInput}
         />
-        {this.state.loading && <p>Loading...</p>}
-        {this.state.articles.map(article => {
-          return <ArticleCard key={article.article_id} article={article} />
+        <div>
+          {error && <p>!! {error.data.msg} !!</p>}
+        </div>
+        {loading && <p>Loading...</p>}
+        {articles.map(article => {
+          return <ArticleCard
+            key={article.article_id}
+            article={article}
+            currentUser={currentUser}
+          />
         })}
       </div >
     )
   }
 
   fetchArticles = (topic, order, author, sortBy) => {
-    console.log(author)
     api.getArticles(topic, order, author, sortBy)
       .then(({ articles }) => {
         this.setState({ articles, loading: false })
       })
-      .catch(err => {
-        console.log(err)
+      .catch(({ response }) => {
+        this.setState({ error: response })
       })
   }
   getSortingParams = (sortingParams) => {
@@ -63,7 +75,7 @@ export default class ArticleList extends Component {
 
   getAuthorSubmit = () => {
     this.setState(currentState => {
-      return { author: currentState.authorInput, authorInput: '' }
+      return { author: currentState.authorInput, authorInput: '', error: null }
     })
   }
 }

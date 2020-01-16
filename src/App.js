@@ -9,21 +9,31 @@ import FullArticle from './components/FullArticle';
 import UserPage from './components/UserPage';
 import ErrorPage from './components/ErrorPage';
 
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Navbar />
-      <Router>
-        <ArticleList path='/' />
-        <ArticleList path='/topic/:topic' />
-        <TopicsList path='/topics' />
-        <FullArticle path='/article/:articleid' />
-        <UserPage path='/user/:username' />
-        <ErrorPage default />
-      </Router>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    currentUser: 'guest'
+  }
+  render() {
+    const { currentUser } = this.state
+    return (
+      <div className="App">
+        <Header />
+        <Navbar getUser={this.getUser} currentUser={currentUser} />
+        <Router>
+          <ArticleList path='/' currentUser={currentUser} />
+          <ArticleList path='/topic/:topic' currentUser={currentUser} />
+          <TopicsList path='/topics' />
+          <FullArticle path='/article/:articleid' currentUser={currentUser} />
+          <UserPage path='/user/:username' currentUser={currentUser} />
+          <ErrorPage default />
+        </Router>
+      </div>
+    );
+  }
+
+  getUser = (user) => {
+    this.setState({ currentUser: user })
+  }
 }
 
 export default App;

@@ -10,26 +10,31 @@ export default class FullArticle extends Component {
   }
 
   componentDidMount() {
-    this.fetchArticle(this.props.articleid)
-    this.fetchComments(this.props.articleid)
+    const { articleid } = this.props;
+    this.fetchArticle(articleid)
+    this.fetchComments(articleid)
   }
 
   render() {
+    // console.log(this)
     const { title, author, created_at, body } = this.state.article
-    const { articleid } = this.props
+    const { articleid, currentUser } = this.props
     return (
       < div >
         <h2>{title}</h2>
         <h3>Author: {author}</h3>
-        <time>date: {created_at}</time>
+        <h5>Posted at: {created_at}</h5>
+
         <main>{body}</main>
         <h5>Comments:</h5>
-        <CommentForm articleid={articleid} />
+        <CommentForm articleid={articleid} newComment={this.newComment} currentUser={currentUser} />
         {this.state.comments.map(comment => {
-          return <div>
-            <Comment comment={comment} />
-            <button onClick={() => this.removeComment(comment.comment_id)}>Delete comment</button>
-          </div>
+          return <Comment
+            key={comment.comment_id}
+            comment={comment}
+            removeComment={this.removeComment}
+            currentUser={currentUser}
+          />
         })}
       </div >
     )
@@ -47,6 +52,12 @@ export default class FullArticle extends Component {
       .then(({ comments }) => {
         this.setState({ comments })
       })
+  }
+
+  newComment = (comment) => {
+    this.setState(currentState => {
+      return { comments: [comment, ...currentState.comments] } //why doesn't push work here?
+    })
   }
 
   removeComment = (id) => {

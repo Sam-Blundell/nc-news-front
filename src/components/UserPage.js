@@ -6,25 +6,35 @@ export default class UserPage extends Component {
   state = {
     user: {},
     articles: [],
-    Loading: true
+    loading: true
   }
 
   componentDidMount() {
-    this.fetchUser(this.props.username)
-    this.fetchUserArticles(this.props.username)
+    const { username } = this.props;
+    this.fetchUser(username)
+    this.fetchUserArticles(username)
+  }
+
+  componentDidUpdate(prevprops) {
+    const { currentUser } = this.props;
+    if (prevprops.currentUser !== currentUser) {
+
+    }
   }
 
   render() {
+    const { loading, articles } = this.state;
     const { username, name, avatar_url } = this.state.user
+    const { currentUser } = this.props
     return (
       <div>
-        {this.state.Loading && <p>Loading...</p>}
+        {loading && <p>Loading {this.props.username}'s profile...</p>}
         <h3>User page for {username}</h3>
         <p>Name: {name} </p>
         <img src={avatar_url} alt="" />
         <p>{username}'s articles:</p>
-        {this.state.articles.map(article => {
-          return <ArticleCard article={article} />
+        {articles.map(article => {
+          return <ArticleCard article={article} currentUser={currentUser} />
         })}
       </div>
     )
@@ -33,7 +43,7 @@ export default class UserPage extends Component {
   fetchUser = (username) => {
     api.getUserByUsername(username)
       .then(({ user }) => {
-        this.setState({ user, Loading: false })
+        this.setState({ user, loading: false })
       })
   }
 

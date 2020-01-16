@@ -1,16 +1,18 @@
 import axios from 'axios'
 
-const baseUrl = 'https://samb-ncnews.herokuapp.com/api/'
+const NCNews = axios.create({
+  baseURL: 'https://samb-ncnews.herokuapp.com/api/'
+});
 
 export const getTopics = () => {
-  return axios.get(`${baseUrl}topics`)
-    .then(res => {
-      return res.data;
+  return NCNews.get('topics')
+    .then(({ data }) => {
+      return data;
     })
 }
 
-export const getArticles = (topic = '', order = 'desc', author = '', sort_by = 'created_at') => { //redundant defaults?
-  return axios.get(`${baseUrl}articles`, {
+export const getArticles = (topic, order, author, sort_by) => {
+  return NCNews.get('articles', {
     params: {
       topic: topic,
       order: order,
@@ -18,34 +20,34 @@ export const getArticles = (topic = '', order = 'desc', author = '', sort_by = '
       sort_by: sort_by
     }
   })
-    .then(res => {
-      return res.data;
+    .then(({ data }) => {
+      return data;
     })
 }
 
 export const getArticleById = (id) => {
-  return axios.get(`${baseUrl}articles/${id}`)
-    .then(res => {
-      return res.data;
+  return NCNews.get(`articles/${id}`)
+    .then(({ data }) => {
+      return data;
     })
 }
 
 export const getCommentsById = (id) => {
-  return axios.get(`${baseUrl}articles/${id}/comments`)
+  return NCNews.get(`articles/${id}/comments`)
     .then(({ data }) => {
       return data
     })
 }
 
 export const getUserByUsername = (username) => {
-  return axios.get(`${baseUrl}users/${username}`)
+  return NCNews.get(`users/${username}`)
     .then(({ data }) => {
       return data
     })
 }
 
 export const postComment = (id, author, body) => {
-  return axios.post(`${baseUrl}articles/${id}/comments`, {
+  return NCNews.post(`articles/${id}/comments`, {
     username: author,
     body: body
   })
@@ -55,5 +57,12 @@ export const postComment = (id, author, body) => {
 }
 
 export const deleteCommentById = (id) => {
-  return axios.delete(`${baseUrl}comments/${id}`)
+  return NCNews.delete(`comments/${id}`)
+}
+
+//type can be article or comment
+export const patchVoteById = (type, id, vote) => {
+  return NCNews.patch(`${type}/${id}`, {
+    inc_votes: vote
+  })
 }

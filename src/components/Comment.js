@@ -1,18 +1,21 @@
 import React from 'react';
 import { Link } from '@reach/router';
+import VoteTracker from './VoteTracker';
 
-export default function Comment({ comment }) {
-  const { author, body, created_at, votes } = comment
+export default function Comment(props) {
+  const { author, body, created_at, votes, comment_id } = props.comment;
+  const { removeComment, currentUser } = props;
   return (
-    <div>
+    < div >
       <ul>
         <Link to={`/user/${author}`}>
           <li>From: {author}</li>
         </Link>
         <time>At: {created_at}</time>
         <p>{body}</p>
-        <li>Rating: {votes}</li>
+        <VoteTracker rating={votes} id={comment_id} type={'comments'} currentUser={currentUser} />
+        {currentUser === author && <button onClick={() => removeComment(comment_id)}>Delete Comment</button>}
       </ul>
-    </div>
+    </div >
   )
 }

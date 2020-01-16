@@ -3,16 +3,17 @@ import * as api from '../api';
 
 export default class CommentForm extends Component {
   state = {
-    author: 'jessjelly',
     body: '',
     newComment: false,
     err: false
   }
 
   render() {
+    const { currentUser } = this.props
     return (
       <div>
-        <button onClick={this.newCommentSwitch}>Post New Comment</button>
+        <button onClick={this.newCommentSwitch} disabled={currentUser === 'guest'}>Post New Comment</button>
+        {currentUser === 'guest' && <><br /> Please log in to comment.</>}
         {this.state.newComment &&
           <form onSubmit={this.handleSubmit}>
             <textarea
@@ -34,9 +35,14 @@ export default class CommentForm extends Component {
   }
 
   handleSubmit = (event) => {
+    const { currentUser, articleid } = this.props;
+    const { body } = this.state;
     event.preventDefault()
-    api.postComment(this.props.articleid, this.state.author, this.state.body)
-    this.setState({ body: '' })
+    api.postComment(articleid, currentUser, body)
+      .then(({ comment }) => {
+        this.props.newComment(comment)
+      })
+    this.setState({ body: '', newComment: false })
   }
 
   newCommentSwitch = () => {
