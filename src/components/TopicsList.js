@@ -6,7 +6,7 @@ export default class TopicsList extends Component {
   state = {
     topics: [],
     loading: true,
-    error: null //currently this takes error info but the page redirects automatically
+    error: null
   }
 
   componentDidMount() {
@@ -31,7 +31,7 @@ export default class TopicsList extends Component {
         this.setState({ topics, loading: false })
       })
       .catch(({ response }) => {
-        this.setState({ error: response.error }) // works but has no effect on the user
+        this.setState({ error: response.error })
       })
   }
 }

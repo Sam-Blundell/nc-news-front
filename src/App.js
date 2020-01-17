@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Router } from '@reach/router';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
@@ -13,6 +12,11 @@ class App extends React.Component {
   state = {
     currentUser: 'guest'
   }
+
+  componentDidMount() {
+    this.setState({ currentUser: localStorage.getItem('currentUser') })
+  }
+
   render() {
     const { currentUser } = this.state
     return (
@@ -33,6 +37,7 @@ class App extends React.Component {
 
   getUser = (user) => {
     this.setState({ currentUser: user })
+    localStorage.setItem('currentUser', user)
   }
 }
 

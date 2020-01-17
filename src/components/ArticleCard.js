@@ -7,7 +7,7 @@ export default function ArticleCard({ article, currentUser }) {
   const { article_id, title, created_at, author, votes, topic, comment_count } = article
   return (
     <ul>
-      <Link to={`/article/${article_id}`} >
+      <Link className='Links' to={`/article/${article_id}`} >
         <li>Title: {title}</li>
       </Link>
       <li>Posted: {timeStampFormatter(created_at)}</li>

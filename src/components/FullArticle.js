@@ -30,7 +30,7 @@ export default class FullArticle extends Component {
         {!loading && <>
           <h2>{title}</h2>
           <h3>Author: {author}</h3>
-          <h5>Posted: {created_at}</h5>
+          <h5>Posted: {timeStampFormatter(created_at)}</h5>
 
           <main>{body}</main>
           <h5>Comments:</h5>
@@ -63,6 +63,7 @@ export default class FullArticle extends Component {
       .then(({ comments }) => {
         this.setState({ comments })
       })
+      .catch(res => { return null })
   }
 
   newComment = (comment) => {

@@ -10,7 +10,7 @@ export default class ArticleList extends Component {
     loading: true,
     error: null,
     author: '',
-    authorInput: '', // do I actually need this?
+    authorInput: '',
     sortBy: 'created_at',
     order: 'desc'
   }
@@ -30,18 +30,18 @@ export default class ArticleList extends Component {
     const sortByChanged = prevstate.sortBy !== sortBy;
     if (topicChanged || orderChanged || authorChanged || sortByChanged) {
       this.fetchArticles(topic, order, author, sortBy)
+      this.setState({ error: null })
     }
   }
 
   render() {
-    const { author, order, sortBy, authorInput, error, loading, articles } = this.state;
-    const { currentUser } = this.props;
+    const { order, sortBy, authorInput, error, loading, articles } = this.state;
+    const { currentUser, topic } = this.props;
     return (
       < div >
         <SortPanel
           sortingParams={this.getSortingParams}
           submit={this.getAuthorSubmit}
-          author={author}
           order={order}
           sortBy={sortBy}
           authorInput={authorInput}
@@ -50,13 +50,16 @@ export default class ArticleList extends Component {
           {error && <ErrorPage error={this.state.error} />}
         </div>
         {(loading) && (!error) && <p>Loading...</p>}
-        {articles.map(article => {
-          return <ArticleCard
-            key={article.article_id}
-            article={article}
-            currentUser={currentUser}
-          />
-        })}
+        {topic && !error && !loading && <h4>Viewing articles for topic: {topic}</h4>}
+        {
+          articles.map(article => {
+            return <ArticleCard
+              key={article.article_id}
+              article={article}
+              currentUser={currentUser}
+            />
+          })
+        }
       </div >
     )
   }
@@ -67,7 +70,7 @@ export default class ArticleList extends Component {
         this.setState({ articles, loading: false })
       })
       .catch(({ response }) => {
-        this.setState({ error: response })
+        this.setState({ error: response, loading: false })
       })
   }
   getSortingParams = (sortingParams) => {
