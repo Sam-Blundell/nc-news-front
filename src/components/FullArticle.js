@@ -3,11 +3,14 @@ import * as api from '../api'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import timeStampFormatter from '../utils'
+import ErrorPage from './ErrorPage'
 
 export default class FullArticle extends Component {
   state = {
     article: {},
     comments: [],
+    loading: true,
+    error: false
   }
 
   componentDidMount() {
@@ -17,25 +20,30 @@ export default class FullArticle extends Component {
   }
 
   render() {
+    const { loading, error } = this.state
     const { title, author, created_at, body } = this.state.article
     const { articleid, currentUser } = this.props
     return (
       < div >
-        <h2>{title}</h2>
-        <h3>Author: {author}</h3>
-        <h5>Posted: {created_at}</h5>
+        {error && <ErrorPage error={this.state.error} />}
+        {(loading) && (!error) && <p>Loading...</p>}
+        {!loading && <>
+          <h2>{title}</h2>
+          <h3>Author: {author}</h3>
+          <h5>Posted: {created_at}</h5>
 
-        <main>{body}</main>
-        <h5>Comments:</h5>
-        <CommentForm articleid={articleid} newComment={this.newComment} currentUser={currentUser} />
-        {this.state.comments.map(comment => {
-          return <Comment
-            key={comment.comment_id}
-            comment={comment}
-            removeComment={this.removeComment}
-            currentUser={currentUser}
-          />
-        })}
+          <main>{body}</main>
+          <h5>Comments:</h5>
+          <CommentForm articleid={articleid} newComment={this.newComment} currentUser={currentUser} />
+          {this.state.comments.map(comment => {
+            return <Comment
+              key={comment.comment_id}
+              comment={comment}
+              removeComment={this.removeComment}
+              currentUser={currentUser}
+            />
+          })}
+        </>}
       </div >
     )
   }
@@ -43,7 +51,10 @@ export default class FullArticle extends Component {
   fetchArticle = (id) => {
     api.getArticleById(id)
       .then(({ article }) => {
-        this.setState({ article })
+        this.setState({ article, loading: false })
+      })
+      .catch(({ response }) => {
+        this.setState({ error: response })
       })
   }
 

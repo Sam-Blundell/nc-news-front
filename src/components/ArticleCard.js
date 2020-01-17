@@ -19,9 +19,7 @@ export default function ArticleCard({ article, currentUser }) {
         id={article_id}
         type={'articles'}
         currentUser={currentUser}
-
       />
-
     </ul>
   )
 }

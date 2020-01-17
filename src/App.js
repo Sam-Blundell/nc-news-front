@@ -25,7 +25,7 @@ class App extends React.Component {
           <TopicsList path='/topics' />
           <FullArticle path='/article/:articleid' currentUser={currentUser} />
           <UserPage path='/user/:username' currentUser={currentUser} />
-          <ErrorPage default />
+          <ErrorPage default error={{ status: '404', data: { msg: 'page not found' } }} />
         </Router>
       </div>
     );

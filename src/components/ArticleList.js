@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ArticleCard from './ArticleCard'
 import * as api from '../api'
 import SortPanel from './SortPanel'
+import ErrorPage from './ErrorPage'
 
 export default class ArticleList extends Component {
   state = {
@@ -46,9 +47,9 @@ export default class ArticleList extends Component {
           authorInput={authorInput}
         />
         <div>
-          {error && <p>!! {error.data.msg} !!</p>}
+          {error && <ErrorPage error={this.state.error} />}
         </div>
-        {loading && <p>Loading...</p>}
+        {(loading) && (!error) && <p>Loading...</p>}
         {articles.map(article => {
           return <ArticleCard
             key={article.article_id}
