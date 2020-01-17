@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import VoteTracker from './VoteTracker';
+import timeStampFormatter from '../utils'
 
 export default function ArticleCard({ article, currentUser }) {
   const { article_id, title, created_at, author, votes, topic, comment_count } = article
@@ -9,7 +10,7 @@ export default function ArticleCard({ article, currentUser }) {
       <Link to={`/article/${article_id}`} >
         <li>Title: {title}</li>
       </Link>
-      <li>Posted at: {created_at}</li>
+      <li>Posted: {timeStampFormatter(created_at)}</li>
       <li>Author: {author}</li>
       <li>Topic: {topic}</li>
       <li>Number of comments: {comment_count}</li>

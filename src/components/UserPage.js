@@ -15,13 +15,6 @@ export default class UserPage extends Component {
     this.fetchUserArticles(username)
   }
 
-  componentDidUpdate(prevprops) {
-    const { currentUser } = this.props;
-    if (prevprops.currentUser !== currentUser) {
-
-    }
-  }
-
   render() {
     const { loading, articles } = this.state;
     const { username, name, avatar_url } = this.state.user

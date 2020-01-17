@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as api from '../api'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
+import timeStampFormatter from '../utils'
 
 export default class FullArticle extends Component {
   state = {
@@ -16,14 +17,13 @@ export default class FullArticle extends Component {
   }
 
   render() {
-    // console.log(this)
     const { title, author, created_at, body } = this.state.article
     const { articleid, currentUser } = this.props
     return (
       < div >
         <h2>{title}</h2>
         <h3>Author: {author}</h3>
-        <h5>Posted at: {created_at}</h5>
+        <h5>Posted: {created_at}</h5>
 
         <main>{body}</main>
         <h5>Comments:</h5>
