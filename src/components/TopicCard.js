@@ -4,11 +4,11 @@ import { Link } from '@reach/router'
 export default function TopicCard(props) {
   const { slug, description } = props.topic
   return (
-    <ul>
+    <ul className='TopicCard'>
       <Link to={`/topic/${slug}`}>
-        <li>{slug}</li>
+        <h3>{slug}</h3>
       </Link>
-      <li>{description}</li>
+      <p>{description}</p>
     </ul>
   )
 }

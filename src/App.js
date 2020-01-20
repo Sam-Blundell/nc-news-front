@@ -21,9 +21,9 @@ class App extends React.Component {
     const { currentUser } = this.state
     return (
       <div className="App">
-        <Header className='Header' />
-        <Navbar className='Navbar' getUser={this.getUser} currentUser={currentUser} />
-        <Router className='testClass'>
+        <Header />
+        <Navbar getUser={this.getUser} currentUser={currentUser} />
+        <Router className='ContentView'>
           <ArticleList path='/' currentUser={currentUser} />
           <ArticleList path='/topic/:topic' currentUser={currentUser} />
           <TopicsList path='/topics' />

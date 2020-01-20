@@ -3,14 +3,16 @@ import { Link } from '@reach/router'
 
 export default function Navbar(props) {
   return (
-    <nav>
-      <Link to='/'>
-        <button>Home</button>
-      </Link>
-      <Link to='/topics'>
-        <button>Topics</button>
-      </Link>
-      <label>You are currently using the site as:
+    <nav className='Navbar'>
+      <div className='NavButtons'>
+        <Link to='/'>
+          <button>Home</button>
+        </Link>
+        <Link to='/topics'>
+          <button>Topics</button>
+        </Link>
+      </div>
+      <label className='userBox'>You are currently using the site as:
         <select onChange={(event) => props.getUser(event.target.value)}>Login
           <option value="" disabled hidden selected>{props.currentUser}</option>
           <option value="guest">guest</option>

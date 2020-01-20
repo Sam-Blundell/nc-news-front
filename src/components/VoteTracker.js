@@ -11,8 +11,8 @@ export default class VoteTracker extends Component {
     return (
       <div>
         <p>Rating: {rating + modifier}</p>
-        <button onClick={() => this.handleUpVote()} disabled={currentUser === 'guest'}>upvote</button>
-        <button onClick={() => this.handleDownVote()} disabled={currentUser === 'guest'}>downvote</button>
+        <button className='Upvote' onClick={() => this.handleUpVote()} disabled={currentUser === 'guest'}>upvote</button>
+        <button className='Downvote' onClick={() => this.handleDownVote()} disabled={currentUser === 'guest'}>downvote</button>
         <br /> {currentUser === 'guest' && <>Please log in to vote</>}
       </div>
     )

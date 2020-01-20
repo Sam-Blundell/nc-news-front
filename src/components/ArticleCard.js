@@ -6,8 +6,8 @@ import timeStampFormatter from '../utils'
 export default function ArticleCard({ article, currentUser }) {
   const { article_id, title, created_at, author, votes, topic, comment_count } = article
   return (
-    <ul>
-      <Link className='Links' to={`/article/${article_id}`} >
+    <ul className='ArticleCard'>
+      <Link to={`/article/${article_id}`} >
         <li>Title: {title}</li>
       </Link>
       <li>Posted: {timeStampFormatter(created_at)}</li>
