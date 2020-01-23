@@ -39,6 +39,7 @@ export default class ArticleList extends Component {
     const { currentUser, topic } = this.props;
     return (
       < div >
+
         <SortPanel
           sortingParams={this.getSortingParams}
           submit={this.getAuthorSubmit}
@@ -46,21 +47,28 @@ export default class ArticleList extends Component {
           sortBy={sortBy}
           authorInput={authorInput}
         />
+
         <div>
           {error && <ErrorPage error={this.state.error} />}
         </div>
-        {(loading) && (!error) && <p>Loading...</p>}
-        {topic && !error && !loading && <h4>Viewing articles for topic: {topic}</h4>}
-        {
-          articles.map(article => {
-            return <ArticleCard
-              key={article.article_id}
-              article={article}
-              currentUser={currentUser}
-            />
-          })
-        }
-      </div >
+
+
+
+        <div className='ArticleView'>
+          {(loading) && (!error) && <p>Loading...</p>}
+          {topic && !error && !loading && <h4>Viewing articles for topic: {topic}</h4>}
+          {
+            articles.map(article => {
+              return <ArticleCard
+                key={article.article_id}
+                article={article}
+                currentUser={currentUser}
+              />
+            })
+          }
+        </div >
+
+      </div>
     )
   }
 

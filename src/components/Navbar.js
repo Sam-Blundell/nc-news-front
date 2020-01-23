@@ -12,7 +12,7 @@ export default function Navbar(props) {
           <button>Topics</button>
         </Link>
       </div>
-      <label className='userBox'>You are currently using the site as:
+      <label className='userBox'>You are currently logged in as: <></>
         <select onChange={(event) => props.getUser(event.target.value)}>Login
           <option value="" disabled hidden selected>{props.currentUser}</option>
           <option value="guest">guest</option>

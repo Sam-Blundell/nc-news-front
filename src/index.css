@@ -3,7 +3,8 @@
   color: #EAE0D5;
   font-family: Tahoma, Geneva, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 18px;
 }
 
 code {
@@ -79,6 +80,7 @@ a {
 	margin: auto;
 	padding: 12px;
 	font-size: 50px;
+	border-bottom: 2px solid black;
 }
 
 .Navbar {
@@ -88,25 +90,42 @@ a {
 	background-color: rgb(34, 34, 34);
 	margin: auto;
 	min-width: 400px;
-	width: 60%;
-	height: 20px;
+	width: 70%;
+	height: 40px;
 	padding: 10px;
+	/* padding: 10px; */
 	display: grid;
-	grid-template-columns: 140px auto 200px;
+	grid-template-columns: 200px auto 200px;
 	grid-template-areas: "buttons . userbox";
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
 	/* justify-items: stretch; */
 }
 
 .NavButtons {
 	grid-area: buttons;
-	/* align-self: stretch */
-	/* align-self center; */
+	justify-self: stretch;	
+}
+
+.NavButtons button {
+	width: 100px;
+	height: 40px;
+	font-size: 20px;
+	font-weight: normal;
 }
 
 .userBox {
-	/* margin-left: auto; */
 	grid-area: userbox;
 }
+
+.userBox select {
+	background-color: rgb(19, 19, 19);
+	border-color: rgb(58, 58, 58);
+	color: #EAE0D5;
+	font-size: 16px;
+}
+
  
 .ContentView {
 		border-left: grey solid 2px;
@@ -115,7 +134,7 @@ a {
 		margin: auto;
 		height: 100%;
 		min-width: 400px;
-		width: 60%;
+		width: 70%;
 		padding: 10px;
 		/* background-color: white; */
 }
@@ -125,4 +144,74 @@ a {
 	border-radius: 5px;
 	padding: 3px 10%;
 	/* height: 50px */
+}
+
+.SortForm {
+	/* border: green solid 1px; */
+	display: grid;
+	grid-template-columns: 240px 240px auto;
+	grid-template-rows: 50% 50%;
+	grid-template-areas: 
+		"ParameterSort AuthorSort"
+		"OrderSort AuthorSort";
+	border-bottom: whitesmoke dotted 1px;
+}
+
+.SortForm select {
+	background-color: rgb(19, 19, 19);
+	border-color: rgb(58, 58, 58);
+	color: #EAE0D5;
+	font-size: 16px;
+}
+
+.ParameterSort {
+	grid-area: ParameterSort;
+	padding: 10px;
+	padding-top: 2px;
+
+}
+
+.AuthorSort {
+	grid-area: AuthorSort;
+	padding: 10px;
+	padding-top: 2px;
+}
+
+.OrderSort {
+	grid-area: OrderSort;
+	padding: 5px;
+	padding-top: 0px;
+	padding-left: 10px;
+}
+
+@media only screen and (max-width: 720px) {
+	.SortForm {
+		display: flex;
+		flex-direction: column-reverse;
+		/* align-items: center; */
+	}
+
+	.ParameterSort {
+		padding: 2px;
+		padding-left: 8px;
+	}
+
+	.OrderSort {
+		padding: 2px;
+		padding-left: 8px;
+
+	}
+
+	.AuthorSort {
+		padding: 2px;
+		padding-left: 8px;
+
+	}
+}
+
+.ArticleView {
+	border: green solid 1px;
+	display: grid;
+	grid-template-columns: 50% 50%;
+
 }

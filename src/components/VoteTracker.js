@@ -10,8 +10,8 @@ export default class VoteTracker extends Component {
     const { rating, currentUser } = this.props
     return (
       <div>
-        <p>Rating: {rating + modifier}</p>
         <button className='Upvote' onClick={() => this.handleUpVote()} disabled={currentUser === 'guest'}>upvote</button>
+        <p>Rating: {rating + modifier}</p>
         <button className='Downvote' onClick={() => this.handleDownVote()} disabled={currentUser === 'guest'}>downvote</button>
         <br /> {currentUser === 'guest' && <>Please log in to vote</>}
       </div>
