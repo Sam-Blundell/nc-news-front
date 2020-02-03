@@ -210,8 +210,29 @@ a {
 }
 
 .ArticleView {
-	border: green solid 1px;
+	/* border: green solid 1px; */
 	display: grid;
 	grid-template-columns: 50% 50%;
 
+}
+
+.ArticleCard {
+	border: grey solid 2px;
+	border-radius: 5px;
+	margin: 20px;
+	padding: 10px;
+}
+
+.VoteTracker {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	/* margin-top: 20px; */
+	height: 50px;
+}
+
+.VoteTracker button {
+	height: 40px;
+	margin: 8px;
+	
 }

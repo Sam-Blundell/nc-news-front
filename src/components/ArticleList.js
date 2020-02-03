@@ -40,23 +40,23 @@ export default class ArticleList extends Component {
     return (
       < div >
 
-        <SortPanel
-          sortingParams={this.getSortingParams}
-          submit={this.getAuthorSubmit}
-          order={order}
-          sortBy={sortBy}
-          authorInput={authorInput}
-        />
-
         <div>
+          <SortPanel
+            sortingParams={this.getSortingParams}
+            submit={this.getAuthorSubmit}
+            order={order}
+            sortBy={sortBy}
+            authorInput={authorInput}
+          />
+
           {error && <ErrorPage error={this.state.error} />}
+          {(loading) && (!error) && <p>Loading...</p>}
+          {topic && !error && !loading && <h4>Viewing articles for topic: {topic}</h4>}
         </div>
 
 
 
         <div className='ArticleView'>
-          {(loading) && (!error) && <p>Loading...</p>}
-          {topic && !error && !loading && <h4>Viewing articles for topic: {topic}</h4>}
           {
             articles.map(article => {
               return <ArticleCard
